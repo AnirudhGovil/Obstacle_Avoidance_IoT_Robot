@@ -41,8 +41,8 @@ const char * myWriteAPIKey = "A00BMSTZAM6Q3T2W";
 
 String myStatus = "";
 
-char ssid[] = "Redminote5";   // your network SSID (name)
-char pass[] = "J12348765";   // your network password
+char ssid[] = "Garam Sthaan";   // your network SSID (name)
+char pass[] = "69696969";   // your network password
 int keyIndex = 0;                 // your network key Index number (needed only for WEP)
 int status = WL_IDLE_STATUS;      //connection status
 WiFiServer server(80);            //server socket
@@ -82,13 +82,13 @@ void setup() {
 
   //  while (!Serial);
 
-  //  enable_WiFi();
-  //  connect_WiFi();
+  enable_WiFi();
+  connect_WiFi();
   //
   ////  server.begin();
   //  printWifiStatus();
   //
-  //  ThingSpeak.begin(wifi);
+  ThingSpeak.begin(wifi);
 }
 
 void loop() {
@@ -191,7 +191,7 @@ void AHEAD()
 void servoObstacleDetection() {
   int distanceR = 31;
   int distanceL = 32;
-//  delay(40);
+  //  delay(40);
   if (distance <= 30)
   {
     STOP();
@@ -247,8 +247,8 @@ void pushToThingSpeak() {
 
   // set the fields with the values
   ThingSpeak.setField(1, number1);
-  ThingSpeak.setField(2, number2);
-  ThingSpeak.setField(3, number3);
+  //  ThingSpeak.setField(2, number2);
+  //  ThingSpeak.setField(3, number3);
 
   // figure out the status message
   //  if(number1 > threshold){
@@ -357,22 +357,19 @@ void advObstacleDetection() {
 
     //        if(onOff > 0){
     servoObstacleDetection();
-    if (loopCount >= 30) {
+    if (loopCount >= 90) {
       STOP();
-      delay(2000);
-      //                Serial.println("Trying ThingSpeak");
-      //                pushToThingSpeak();
-
-      //                Serial.println("Trying OM2M");
-      //                createCI(String(BotObstacleDistance));
-
+      Serial.println("Trying ThingSpeak");
+      pushToThingSpeak();
+      Serial.println("Trying OM2M");
+      createCI(String(BotObstacleDistance));
       loopCount = 0;
-
     }
     else {
       Serial.println("Incrementing loop");
       loopCount++;
     }
+
     //  }
   }
 }
